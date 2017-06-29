@@ -7,6 +7,6 @@
 	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		   http://www.springframework.org/schema/context
 		   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-    <!-- id 表示你这个组件的名字，class表示组件类 -->
-    <bean id="hello" class="com.wangshuo.spring.chapter2.Helloworld.HelloImpl"></bean>
+    <bean  name="bean1;alias11,alias12;alias13 alias14" class="com.wangshuo.spring.chapter2.Helloworld.HelloImpl"/>
+    <bean id="bean2" name="alias21;alias22" class="com.wangshuo.spring.chapter2.Helloworld.HelloImpl"></bean>
 </beans>
