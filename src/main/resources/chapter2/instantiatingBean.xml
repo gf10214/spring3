@@ -17,11 +17,11 @@
         <constructor-arg index="0" value="Hello Spring!"/>
     </bean>
     <!-- 使用静态工厂方法 -->
-    <bean id="bean3" class="cn.javass.spring.chapter2.HelloApiStaticFactory" factory-method="newInstance">
+    <bean id="bean3" class="com.wangshuo.spring.chapter2.HelloApiStaticFactory" factory-method="newInstance">
         <constructor-arg index="0" value="Hello Spring!"/>
     </bean>
     <!-- 使用实例工厂方法 -->
-    <bean id="beanInstanceFactory" class="cn.javass.spring.chapter2.HelloApiInstanceFactory"/>
+    <bean id="beanInstanceFactory" class="com.wangshuo.spring.chapter2.HelloApiInstanceFactory"/>
     <bean id="bean4" factory-bean="beanInstanceFactory" factory-method="newInstance">
         <constructor-arg index="0" value="Hello Spring!"></constructor-arg>
     </bean>
