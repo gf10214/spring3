@@ -5,6 +5,7 @@ import com.wangshuo.spring.chapter3.bean.*;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -171,4 +172,66 @@ public class DependencyInjectTest {
         System.out.println(propertiesBean2.getValues().containsKey("5"));
         System.out.println(propertiesBean2.getValues().containsValue("11"));
     }
+
+    //注入其他Bean类型值 通过ref bean
+    @Test
+    public void testBeanInject() {
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("chapter3/beanInject.xml");
+        //通过构造器方式注入
+        HelloApi bean1 = beanFactory.getBean("bean1", HelloApi.class);
+        bean1.sayHello();
+        //通过setter方式注入
+        HelloApi bean2 = beanFactory.getBean("bean2", HelloApi.class);
+        bean2.sayHello();
+    }
+    @Test
+    public void testLocalAndparentBeanInject() {
+        //初始化父容器
+        ApplicationContext parentBeanContext =new ClassPathXmlApplicationContext("chapter3/parentBeanInject.xml");
+        //初始化当前容器
+        ApplicationContext beanContext = new ClassPathXmlApplicationContext(new String[] {"chapter3/localBeanInject.xml"}, parentBeanContext);
+        HelloApi bean1 = beanContext.getBean("bean1", HelloApi.class);
+        bean1.sayHello();//该Bean引用local bean
+        HelloApi bean2 = beanContext.getBean("bean2", HelloApi.class);
+        bean2.sayHello();//该Bean引用parent bean
+    }
+
+    //注入其他Bean类型值 通过inner bean
+    @Test
+    public void testInnerBeanInject() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("chapter3/innerBeanInject.xml");
+
+        HelloApi bean = context.getBean("bean", HelloApi.class);
+        bean.sayHello();
+
+    }
+
+    //对象图导航
+    @Test
+    public void testNavigationBeanInject() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("chapter3/navigationBeanInject.xml");
+
+        //获取导航Bean
+        NavigationA navigationA = context.getBean("a", NavigationA.class);
+        //获取通过导航注入方式注入的NavigationC
+        navigationA.getNavigationB().getNavigationC().sayNavigation();
+        //获取通过导航注入方式注入的list条目
+        navigationA.getNavigationB().getList().get(0).sayNavigation();
+        //获取通过导航注入方式注入的map条目
+        navigationA.getNavigationB().getMap().get("key").sayNavigation();
+        //获取通过导航注入方式注入的数组条目
+        navigationA.getNavigationB().getArray()[0].sayNavigation();
+        //获取通过导航注入方式注入的Properties条目
+        ((NavigationC)navigationA.getNavigationB().getProperties().get("1")).sayNavigation();
+
+
+    }
+    @Test
+    public void testPNamespaceBeanInject() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("chapter3/pNamespaceInject.xml");
+        Assert.assertEquals("value", context.getBean("idrefBean1", IdRefTestBean.class).getId());
+        Assert.assertEquals("test", context.getBean("idrefBean2", IdRefTestBean.class).getId());
+
+    }
+
 }
