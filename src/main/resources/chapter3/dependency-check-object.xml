@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+           
+    <bean id="helloApi" class="com.wangshuo.spring.chapter2.Helloworld.HelloImpl"/>
+    <!-- 注意我们没有注入helloApi，所以测试时会报错 -->
+    <bean id="bean" 
+          class="com.wangshuo.spring.chapter3.bean.HelloApiDecorator"
+          dependency-check="objects">
+        <property name="message" value="Haha"/>
+    </bean>
+          
+</beans>
