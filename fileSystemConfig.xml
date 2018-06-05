@@ -10,4 +10,5 @@
     <!-- id 表示你这个组件的名字，class表示组件类 -->
     <bean id="hello" class="com.wangshuo.spring.chapter2.Helloworld.HelloImpl"></bean>
 
+
 </beans>
